@@ -29,6 +29,12 @@
 
 (setq ring-bell-function 'ignore)
 
+(defun kill-current-buffer ()
+  "Kills the current buffer."
+  (interactive)
+  (kill-buffer (current-buffer)))
+(global-set-key (kbd "C-x k") 'kill-current-buffer)
+
 (use-package switch-window
   :ensure t
   :config
@@ -70,6 +76,9 @@
   :init
     (add-hook 'prog-mode-hook 'rainbow-mode))
 
+(setq line-number-mode t)
+(setq column-number-mode t)
+
 ;; install spacemacs-theme
 (unless (package-installed-p 'spacemacs-theme)
   (package-refresh-contents)
@@ -94,10 +103,15 @@
   :bind
   ("M-s" . avy-goto-char))
 
-(use-package org-bullets
-  :ensure t
-  :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
+(global-set-key (kbd "C-c l k") 'kill-whole-line)
+
+(defun daedreth/kill-inner-word ()
+  "Kills the entire word your cursor is in. Equivalent to 'ciw' in vim."
+  (interactive)
+  (forward-char 1)
+  (backward-word)
+  (kill-word 1))
+(global-set-key (kbd "C-c w k") 'daedreth/kill-inner-word)
 
 (defun config-visit ()
   (interactive)
@@ -108,3 +122,8 @@
   (interactive)
   (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
 (global-set-key (kbd "C-c r") 'config-reload)
+
+(use-package org-bullets
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
