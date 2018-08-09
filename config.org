@@ -52,7 +52,38 @@
 #+BEGIN_SRC emacs-lisp
 (setq ring-bell-function 'ignore)
 #+END_SRC
-* mode
+** switch-window
+#+BEGIN_SRC emacs-lisp
+(use-package switch-window
+  :ensure t
+  :config
+    (setq switch-window-input-style 'minibuffer)
+    (setq switch-window-increase 4)
+    (setq switch-window-threshold 2)
+    (setq switch-window-shortcut-style 'qwerty)
+    (setq switch-window-qwerty-shortcuts
+        '("a" "s" "d" "f" "j" "k" "l" "i" "o"))
+  :bind
+    ([remap other-window] . switch-window))
+#+END_SRC
+** Following window splits
+After you split a window, your focus remains in the previous one. This annoyed me so much I wrote these two, they take care of it.
+#+BEGIN_SRC emacs-lisp
+(defun split-and-follow-horizontally ()
+  (interactive)
+  (split-window-below)
+  (balance-windows)
+  (other-window 1))
+(global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
+
+(defun split-and-follow-vertically ()
+  (interactive)
+  (split-window-right)
+  (balance-windows)
+  (other-window 1))
+(global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
+#+END_SRC
+* Mode
 
 ** global-hl-line-mode & global-prettify-symbols-mode
 #+BEGIN_SRC emacs-lisp
@@ -68,6 +99,15 @@
   (setq ido-create-new-buffer 'always)
   (setq ido-everywhere t)
   (ido-mode 1)
+#+END_SRC
+
+** raibow
+#00FF00 显示 颜色环绕
+#+BEGIN_SRC emacs-lisp
+(use-package rainbow-mode
+  :ensure t
+  :init
+    (add-hook 'prog-mode-hook 'rainbow-mode))
 #+END_SRC
 * Theme
   
@@ -110,6 +150,14 @@ Choose Theme use `M-x customize-themes`
   (beacon-mode 1))
 #+END_SRC
 
+** avy
+`M-s` 输入首字母，然后 输入显示的 组合字母 快速定位
+#+BEGIN_SRC emacs-lisp
+  (use-package avy
+    :ensure t
+    :bind
+    ("M-s" . avy-goto-char))
+#+END_SRC
 * Org
 
 ** org-bullets
@@ -118,4 +166,22 @@ Choose Theme use `M-x customize-themes`
     :ensure t
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
+#+END_SRC
+
+* Config
+
+** edit
+#+BEGIN_SRC emacs-lisp
+  (defun config-visit ()
+    (interactive)
+    (find-file "~/.emacs.d/config.org"))
+  (global-set-key (kbd "C-c e") 'config-visit)
+#+END_SRC
+
+** reload
+#+BEGIN_SRC emacs-lisp
+  (defun config-reload()
+    (interactive)
+    (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
+  (global-set-key (kbd "C-c r") 'config-reload)
 #+END_SRC
