@@ -131,11 +131,10 @@ Show the current line and column for your cursor. We are not going to have relat
 (setq column-number-mode t)
 #+END_SRC
 
-* Theme
+* Theme and Mode-line
   
 Install these themes first
-Choose Theme use `M-x customize-themes`
-
+Choose Theme use `M-x customize-them
 ** spacemacs-theme
 
 #+BEGIN_SRC emacs-lisp
@@ -152,6 +151,33 @@ Choose Theme use `M-x customize-themes`
   (package-install 'dracula-theme))
 #+END_SRC
 
+** spaceline
+#+BEGIN_SRC emacs-lisp
+  (use-package spaceline
+    :ensure t
+    :config
+    (require 'spaceline-config)
+      (setq spaceline-buffer-encoding-abbrev-p nil)
+      (setq spaceline-line-column-p nil)
+      (setq spaceline-line-p nil)
+      (setq powerline-default-separator (quote arrow))
+      (spaceline-spacemacs-theme))
+#+END_SRC
+
+** Diminish 
+
+Your modeline is sacred, and if you have a lot of modes enabled, as you will if you use this config, you might end up with a lot of clutter there, the package =diminish= disables modes on the mode line but keeps them running, it just prevents them from showing up and taking up space.
+*THIS WILL BE REMOVED SOON AS USE-PACKAGE HAS THE FUNCTIONALITY BUILT IN*
+#+BEGIN_SRC emacs-lisp
+(use-package diminish
+  :ensure t
+  :init
+  (diminish 'which-key-mode)
+  (diminish 'subword-mode)
+  (diminish 'beacon-mode)
+  (diminish 'hungry-delete-mode)
+  (diminish 'rainbow-mode))
+#+END_SRC
 * Packages
 
 ** which-key
