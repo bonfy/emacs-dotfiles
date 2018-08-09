@@ -76,6 +76,8 @@
   :init
     (add-hook 'prog-mode-hook 'rainbow-mode))
 
+(global-subword-mode 1)
+
 (setq line-number-mode t)
 (setq column-number-mode t)
 
@@ -146,3 +148,6 @@
   :ensure t
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
+
+(add-to-list 'org-structure-template-alist
+	       '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))

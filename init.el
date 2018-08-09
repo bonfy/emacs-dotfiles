@@ -35,7 +35,7 @@
  '(custom-enabled-themes (quote (spacemacs-dark)))
  '(custom-safe-themes
    (quote
-    ("fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
+    ("aaffceb9b0f539b6ad6becb8e96a04f2140c8faa1de8039a343a4f1e009174fb" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
  '(package-selected-packages
    (quote
     (diminish spaceline switch-window rainbow-mode avy org-bullets dracula-theme beacon spacemacs-theme which-key use-package))))

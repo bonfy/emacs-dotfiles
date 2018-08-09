@@ -124,6 +124,11 @@ After you split a window, your focus remains in the previous one. This annoyed m
     (add-hook 'prog-mode-hook 'rainbow-mode))
 #+END_SRC
 
+** subword
+#+BEGIN_SRC emacs-lisp
+(global-subword-mode 1)
+#+END_SRC
+
 ** line and column mode
 Show the current line and column for your cursor. We are not going to have relative-linum-mode in every major mode, so this is useful.
 #+BEGIN_SRC emacs-lisp
@@ -178,6 +183,7 @@ Your modeline is sacred, and if you have a lot of modes enabled, as you will if 
   (diminish 'hungry-delete-mode)
   (diminish 'rainbow-mode))
 #+END_SRC
+
 * Packages
 
 ** which-key
@@ -221,6 +227,7 @@ Regardless of where your cursor is, this quickly copies a line.
       (point-at-eol)))))
 (global-set-key (kbd "C-c l c") 'daedreth/copy-whole-line)
 #+END_SRC
+
 ** Kill a line `C-c l k`
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-c l k") 'kill-whole-line)
@@ -265,6 +272,7 @@ Regardless of where your cursor is, this quickly copies a line.
     (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
   (global-set-key (kbd "C-c r") 'config-reload)
 #+END_SRC
+
 * Org
 
 ** org-bullets
@@ -273,5 +281,13 @@ Regardless of where your cursor is, this quickly copies a line.
     :ensure t
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
+#+END_SRC
+
+** org emacs-lisp template  `<el`
+Hitting tab after an “<el” in an org-mode file will create a template for elisp insertion.
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'org-structure-template-alist
+	       '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
 #+END_SRC
 
