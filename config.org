@@ -1,0 +1,101 @@
+* Terminal Settings
+
+** hide startup-message
+
+#+BEGIN_SRC emacs-lisp
+;; hide startup frame message
+(setq inhibit-startup-message t)
+#+END_SRC
+
+** hide tool-bar menu-bar scroll-bar
+#+BEGIN_SRC emacs-lisp
+;; hide tool-bar
+(tool-bar-mode -1)
+
+;; hide menu-bar
+(menu-bar-mode -1)
+
+;; hide scroll-bar
+(scroll-bar-mode -1)
+#+END_SRC
+
+** backupfile setting
+#+BEGIN_SRC emacs-lisp
+;; backupfile setting
+;; (setq make-backup-files nil)
+;; (setq auto-save-default nil)
+#+END_SRC
+
+** yes-or-no change to y-or-n
+
+#+BEGIN_SRC emacs-lisp
+;; yes-or-no change to y-or-n
+(defalias 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+
+** ansi-term
+#+BEGIN_SRC emacs-lisp
+;; (defvar my-fish-shell "/usr/local/bin/fish")
+;; (defvar my-zsh-shell "/usr/local/bin/zsh")
+;; (defadvice ansi-term (before force-bash)
+;;   (interactive (list my-fish-shell)))
+;; (ad-activate 'ansi-term)
+
+(global-set-key (kbd "<s-return>") 'ansi-term)
+#+END_SRC
+
+** scroll-conservatively
+#+BEGIN_SRC emacs-lisp
+(setq scroll-conservatively 100)
+#+END_SRC
+** ring-bell ignore
+#+BEGIN_SRC emacs-lisp
+(setq ring-bell-function 'ignore)
+#+END_SRC
+** mode set
+#+BEGIN_SRC emacs-lisp
+;; mode set
+(when window-system (global-hl-line-mode t))
+(global-prettify-symbols-mode t)
+#+END_SRC
+
+* Theme
+Install these themes first
+Choose Theme use `M-x customize-themes`
+
+** spacemacs-theme
+
+#+BEGIN_SRC emacs-lisp
+;; install spacemacs-theme
+(unless (package-installed-p 'spacemacs-theme)
+  (package-refresh-contents)
+  (package-install 'spacemacs-theme))
+#+END_SRC
+
+** dracula
+
+#+BEGIN_SRC emacs-lisp
+(unless (package-installed-p 'dracula-theme)
+  (package-refresh-contents)
+  (package-install 'dracula-theme))
+#+END_SRC
+
+* Packages
+
+** which-key
+
+#+BEGIN_SRC emacs-lisp
+(use-package which-key
+  :ensure t
+  :init
+  (which-key-mode))
+#+END_SRC
+
+** beacon
+
+#+BEGIN_SRC emacs-lisp
+(use-package beacon
+  :ensure t
+  :init
+  (beacon-mode 1))
+#+END_SRC
