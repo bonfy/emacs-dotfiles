@@ -52,14 +52,25 @@
 #+BEGIN_SRC emacs-lisp
 (setq ring-bell-function 'ignore)
 #+END_SRC
-** mode set
+* mode
+
+** global-hl-line-mode & global-prettify-symbols-mode
 #+BEGIN_SRC emacs-lisp
 ;; mode set
 (when window-system (global-hl-line-mode t))
 (global-prettify-symbols-mode t)
 #+END_SRC
 
+** ido-mode
+#+BEGIN_SRC emacs-lisp
+  ;; ido-mode
+  (setq ido-enalbe-flex-matching nil)
+  (setq ido-create-new-buffer 'always)
+  (setq ido-everywhere t)
+  (ido-mode 1)
+#+END_SRC
 * Theme
+  
 Install these themes first
 Choose Theme use `M-x customize-themes`
 
@@ -72,8 +83,7 @@ Choose Theme use `M-x customize-themes`
   (package-install 'spacemacs-theme))
 #+END_SRC
 
-** dracula
-
+** dracula-theme
 #+BEGIN_SRC emacs-lisp
 (unless (package-installed-p 'dracula-theme)
   (package-refresh-contents)
@@ -98,4 +108,14 @@ Choose Theme use `M-x customize-themes`
   :ensure t
   :init
   (beacon-mode 1))
+#+END_SRC
+
+* Org
+
+** org-bullets
+#+BEGIN_SRC emacs-lisp
+  (use-package org-bullets
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
 #+END_SRC

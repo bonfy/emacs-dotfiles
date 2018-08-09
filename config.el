@@ -33,6 +33,12 @@
 (when window-system (global-hl-line-mode t))
 (global-prettify-symbols-mode t)
 
+;; ido-mode
+(setq ido-enalbe-flex-matching nil)
+(setq ido-create-new-buffer 'always)
+(setq ido-everywhere t)
+(ido-mode 1)
+
 ;; install spacemacs-theme
 (unless (package-installed-p 'spacemacs-theme)
   (package-refresh-contents)
@@ -51,3 +57,8 @@
   :ensure t
   :init
   (beacon-mode 1))
+
+(use-package org-bullets
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
