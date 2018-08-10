@@ -115,7 +115,7 @@ After you split a window, your focus remains in the previous one. This annoyed m
   (ido-mode 1)
 #+END_SRC
 
-** raibow
+** rainbow
 #00FF00 显示 颜色环绕
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-mode
@@ -124,9 +124,30 @@ After you split a window, your focus remains in the previous one. This annoyed m
     (add-hook 'prog-mode-hook 'rainbow-mode))
 #+END_SRC
 
+** rainbow-delimiters
+#+BEGIN_SRC emacs-lisp
+  (use-package rainbow-delimiters
+    :ensure t
+    :init
+    (rainbow-delimiters-mode 1))
+  ;; if only need for prog mode
+    ;; (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+#+END_SRC
+
 ** subword
 #+BEGIN_SRC emacs-lisp
 (global-subword-mode 1)
+#+END_SRC
+
+** electric-pair-mode
+#+BEGIN_SRC emacs-lisp
+  (setq electric-pair-pairs '(
+			     (?\{ . ?\})
+			     (?\( . ?\))
+			     (?\[ . ?\])
+			     (?\" . ?\")
+			     ))
+  (electric-pair-mode t)
 #+END_SRC
 
 ** line and column mode
@@ -204,6 +225,13 @@ Your modeline is sacred, and if you have a lot of modes enabled, as you will if 
   (beacon-mode 1))
 #+END_SRC
 
+** hungry-delete
+#+BEGIN_SRC emacs-lisp
+  (use-package hungry-delete
+    :ensure t
+    :config
+      (global-hungry-delete-mode))
+#+END_SRC
 ** avy
 `M-s` 输入首字母，然后 输入显示的 组合字母 快速定位
 #+BEGIN_SRC emacs-lisp
@@ -214,6 +242,7 @@ Your modeline is sacred, and if you have a lot of modes enabled, as you will if 
 #+END_SRC
 
 * Easy Function
+
 ** Copy a line `C-c l c`
 Regardless of where your cursor is, this quickly copies a line.
 #+BEGIN_SRC emas-lisp
@@ -274,6 +303,11 @@ Regardless of where your cursor is, this quickly copies a line.
 #+END_SRC
 
 * Org
+
+** template edit in current window
+#+BEGIN_SRC emacs-lisp
+  (setq org-src-window-setup 'current-window)
+#+END_SRC
 
 ** org-bullets
 #+BEGIN_SRC emacs-lisp

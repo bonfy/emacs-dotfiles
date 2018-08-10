@@ -76,7 +76,22 @@
   :init
     (add-hook 'prog-mode-hook 'rainbow-mode))
 
+(use-package rainbow-delimiters
+  :ensure t
+  :init
+  (rainbow-delimiters-mode 1))
+;; if only need for prog mode
+  ;; (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+
 (global-subword-mode 1)
+
+(setq electric-pair-pairs '(
+			   (?\{ . ?\})
+			   (?\( . ?\))
+			   (?\[ . ?\])
+			   (?\" . ?\")
+			   ))
+(electric-pair-mode t)
 
 (setq line-number-mode t)
 (setq column-number-mode t)
@@ -119,6 +134,11 @@
   :init
   (beacon-mode 1))
 
+(use-package hungry-delete
+  :ensure t
+  :config
+    (global-hungry-delete-mode))
+
 (use-package avy
   :ensure t
   :bind
@@ -143,6 +163,8 @@
   (interactive)
   (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
 (global-set-key (kbd "C-c r") 'config-reload)
+
+(setq org-src-window-setup 'current-window)
 
 (use-package org-bullets
   :ensure t
