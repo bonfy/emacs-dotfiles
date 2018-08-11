@@ -141,6 +141,12 @@
   (setq dashboard-items '((recents . 20)))
   (setq dashboard-banner-logo-title "Be Happy~ Bonfy"))
 
+(use-package linum-relative
+  :ensure t
+  :config
+    (setq linum-relative-current-symbol "")
+    (add-hook 'prog-mode-hook 'linum-relative-mode))
+
 (use-package hungry-delete
   :ensure t
   :config

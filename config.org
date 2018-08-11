@@ -235,6 +235,16 @@ Your modeline is sacred, and if you have a lot of modes enabled, as you will if 
     (setq dashboard-banner-logo-title "Be Happy~ Bonfy"))
 #+END_SRC
 
+** linum-relative
+#+BEGIN_SRC emacs-lisp
+(use-package linum-relative
+  :ensure t
+  :config
+    (setq linum-relative-current-symbol "")
+    (add-hook 'prog-mode-hook 'linum-relative-mode))
+
+#+END_SRC
+
 ** hungry-delete
 #+BEGIN_SRC emacs-lisp
   (use-package hungry-delete
