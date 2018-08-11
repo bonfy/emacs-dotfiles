@@ -134,10 +134,22 @@
   :init
   (beacon-mode 1))
 
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-items '((recents . 20)))
+  (setq dashboard-banner-logo-title "Be Happy~ Bonfy"))
+
 (use-package hungry-delete
   :ensure t
   :config
     (global-hungry-delete-mode))
+
+(use-package company
+  :ensure t
+  :init
+  (add-hook 'after-init-hook 'global-company-mode))
 
 (use-package avy
   :ensure t

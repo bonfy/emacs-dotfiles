@@ -225,6 +225,16 @@ Your modeline is sacred, and if you have a lot of modes enabled, as you will if 
   (beacon-mode 1))
 #+END_SRC
 
+** dashboard
+#+BEGIN_SRC emacs-lisp
+  (use-package dashboard
+    :ensure t
+    :config
+    (dashboard-setup-startup-hook)
+    (setq dashboard-items '((recents . 20)))
+    (setq dashboard-banner-logo-title "Be Happy~ Bonfy"))
+#+END_SRC
+
 ** hungry-delete
 #+BEGIN_SRC emacs-lisp
   (use-package hungry-delete
@@ -232,6 +242,15 @@ Your modeline is sacred, and if you have a lot of modes enabled, as you will if 
     :config
       (global-hungry-delete-mode))
 #+END_SRC
+
+** company(for auto complete)
+#+BEGIN_SRC emacs-lisp
+  (use-package company
+    :ensure t
+    :init
+    (add-hook 'after-init-hook 'global-company-mode))
+#+END_SRC
+
 ** avy
 `M-s` 输入首字母，然后 输入显示的 组合字母 快速定位
 #+BEGIN_SRC emacs-lisp
