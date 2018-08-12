@@ -24,8 +24,13 @@
 
 (setq package-enable-at-startup nil)
 
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/") t)
+; (add-to-list 'package-archives
+;              '("melpa" . "https://melpa.org/packages/") t)
+
+;;; remove SC if you are not using sunrise commander and org if you like outdated packages
+(setq package-archives '(("ELPA"  . "http://tromey.com/elpa/")
+			 ("gnu"   . "http://elpa.gnu.org/packages/")
+			 ("melpa" . "https://melpa.org/packages/")))
 
 (package-initialize)
 
@@ -57,7 +62,7 @@
     ("aaffceb9b0f539b6ad6becb8e96a04f2140c8faa1de8039a343a4f1e009174fb" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
  '(package-selected-packages
    (quote
-    (linum-relative company dashboard rainbow-delimiters hungry-delete diminish spaceline switch-window rainbow-mode avy org-bullets dracula-theme beacon spacemacs-theme which-key use-package))))
+    (ivy swiper popup-kill-ring linum-relative company dashboard rainbow-delimiters hungry-delete diminish spaceline switch-window rainbow-mode avy org-bullets dracula-theme beacon spacemacs-theme which-key use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

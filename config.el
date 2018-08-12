@@ -152,6 +152,17 @@
   :config
     (global-hungry-delete-mode))
 
+(use-package ivy
+  :ensure t)
+
+(use-package swiper
+  :ensure t
+  :bind ("C-s" . 'swiper))
+
+(use-package popup-kill-ring
+  :ensure t
+  :bind ("M-y" . popup-kill-ring))
+
 (use-package company
   :ensure t
   :init
