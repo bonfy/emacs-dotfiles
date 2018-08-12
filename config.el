@@ -1,6 +1,12 @@
 ;; hide startup frame message
 (setq inhibit-startup-message t)
 
+(setq locale-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+
 ;; hide tool-bar
 (tool-bar-mode -1)
 
@@ -159,6 +165,14 @@
   :ensure t
   :bind ("C-s" . 'swiper))
 
+(use-package mark-multiple
+  :ensure t
+  :bind ("s-d" . 'mark-next-like-this))
+
+(use-package expand-region
+  :ensure t
+  :bind ("C-q" . er/expand-region))
+
 (use-package popup-kill-ring
   :ensure t
   :bind ("M-y" . popup-kill-ring))
@@ -192,6 +206,14 @@
   (interactive)
   (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
 (global-set-key (kbd "C-c r") 'config-reload)
+
+(setq org-ellipsis " ")
+(setq org-src-fontify-natively t)
+(setq org-src-tab-acts-natively t)
+(setq org-confirm-babel-evaluate nil)
+(setq org-export-with-smart-quotes t)
+(setq org-src-window-setup 'current-window)
+(add-hook 'org-mode-hook 'org-indent-mode)
 
 (setq org-src-window-setup 'current-window)
 

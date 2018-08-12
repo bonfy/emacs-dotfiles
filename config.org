@@ -7,6 +7,15 @@
 (setq inhibit-startup-message t)
 #+END_SRC
 
+** UTF-8 Setting
+#+BEGIN_SRC emacs-lisp
+(setq locale-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+#+END_SRC
+
 ** hide tool-bar menu-bar scroll-bar
 #+BEGIN_SRC emacs-lisp
 ;; hide tool-bar
@@ -266,6 +275,20 @@ Your modeline is sacred, and if you have a lot of modes enabled, as you will if 
   :bind ("C-s" . 'swiper))
 #+END_SRC
 
+** mark-multiple `s-d`
+#+BEGIN_SRC emacs-lisp
+(use-package mark-multiple
+  :ensure t
+  :bind ("s-d" . 'mark-next-like-this))
+#+END_SRC
+
+** expand-region `C-q`
+#+BEGIN_SRC emacs-lisp
+(use-package expand-region
+  :ensure t
+  :bind ("C-q" . er/expand-region))
+#+END_SRC
+
 ** popup-kill-ring `M-y`
 #+BEGIN_SRC emacs-lisp
 (use-package popup-kill-ring
@@ -352,6 +375,17 @@ Regardless of where your cursor is, this quickly copies a line.
 #+END_SRC
 
 * Org
+
+** common settings
+#+BEGIN_SRC emacs-lisp
+  (setq org-ellipsis " ")
+  (setq org-src-fontify-natively t)
+  (setq org-src-tab-acts-natively t)
+  (setq org-confirm-babel-evaluate nil)
+  (setq org-export-with-smart-quotes t)
+  (setq org-src-window-setup 'current-window)
+  (add-hook 'org-mode-hook 'org-indent-mode)
+#+END_SRC
 
 ** template edit in current window
 #+BEGIN_SRC emacs-lisp
