@@ -3,8 +3,8 @@
 ** hide startup-message
 
 #+BEGIN_SRC emacs-lisp
-;; hide startup frame message
-(setq inhibit-startup-message t)
+  ;; hide startup frame message
+  (setq inhibit-startup-message t)
 #+END_SRC
 
 ** UTF-8 Setting
@@ -298,18 +298,34 @@ Your modeline is sacred, and if you have a lot of modes enabled, as you will if 
 
 ** company for auto complete
 #+BEGIN_SRC emacs-lisp
-(use-package company
-  :ensure t
-  :config
-  (setq company-idle-delay 0)
-  (setq company-minimum-prefix-length 3))
+  (use-package company               
+    :ensure t
+    :defer t
+    :init (global-company-mode)
+    :config
+    (progn
+      ;; Use Company for completion
+      (bind-key [remap completion-at-point] #'company-complete company-mode-map)
 
-(with-eval-after-load 'company
-  (define-key company-active-map (kbd "M-n") nil)
-  (define-key company-active-map (kbd "M-p") nil)
-  (define-key company-active-map (kbd "C-n") #'company-select-next)
-  (define-key company-active-map (kbd "C-p") #'company-select-previous)
-  (define-key company-active-map (kbd "SPC") #'company-abort))
+      (setq company-tooltip-align-annotations t
+            ;; Easy navigation to candidates with M-<n>
+            company-show-numbers t)
+      (setq company-dabbrev-downcase nil))
+    :diminish company-mode)
+
+
+  (with-eval-after-load 'company
+    (define-key company-active-map (kbd "M-n") nil)
+    (define-key company-active-map (kbd "M-p") nil)
+    (define-key company-active-map (kbd "C-n") #'company-select-next)
+    (define-key company-active-map (kbd "C-p") #'company-select-previous)
+    (define-key company-active-map (kbd "SPC") #'company-abort))
+
+
+  (use-package company-quickhelp          ; Documentation popups for Company
+    :ensure t
+    :defer t
+    :init (add-hook 'global-company-mode-hook #'company-quickhelp-mode))
 #+END_SRC
 
 ** avy
@@ -451,9 +467,6 @@ Hitting tab after an “<el” in an org-mode file will create a template for el
 *** company
 Requires libclang to be installed.
 #+BEGIN_SRC emacs-lisp
-  (with-eval-after-load 'company
-    (add-hook 'c++-mode-hook 'company-mode)
-    (add-hook 'c-mode-hook 'company-mode))
 
   (use-package company-c-headers
     :ensure t)
@@ -485,8 +498,6 @@ Requires libclang to be installed.
 #+END_SRC
 *** company
 #+BEGIN_SRC emacs-lisp
-  (add-hook 'python-mode-hook 'company-mode)
-
   (use-package company-jedi
     :ensure t
     :config
@@ -532,6 +543,35 @@ Requires libclang to be installed.
 
 (add-hook 'js2-mode-hook
           (lambda () (flycheck-select-checker "javascript-eslint")))
+
+(add-hook 'js2-mode-hook 'yas-minor-mode)
+#+END_SRC
+** golang
+#+BEGIN_SRC emacs-lisp
+  (use-package company-go
+    :ensure t
+    :defer t
+    :init
+    (with-eval-after-load 'company
+      (add-to-list 'company-backends 'company-go)))
+
+
+  (use-package go-mode
+    :ensure t
+    :init
+    (progn
+      (setq gofmt-command "goimports")
+      (add-hook 'before-save-hook 'gofmt-before-save)
+      (bind-key [remap find-tag] #'godef-jump))
+    :config
+    (add-hook 'go-mode-hook 'electric-pair-mode))
+
+  (use-package go-eldoc
+    :ensure t
+    :defer
+    :init
+    (add-hook 'go-mode-hook 'go-eldoc-setup))
+
 #+END_SRC
 ** emacs-lisp
 *** eldoc
@@ -546,8 +586,6 @@ Requires libclang to be installed.
 
 *** company
 #+BEGIN_SRC emacs-lisp
-  (add-hook 'emacs-lisp-mode-hook 'company-mode)
-
   (use-package slime
     :ensure t
     :config

@@ -177,11 +177,21 @@
   :ensure t
   :bind ("M-y" . popup-kill-ring))
 
-(use-package company
+(use-package company               
   :ensure t
+  :defer t
+  :init (global-company-mode)
   :config
-  (setq company-idle-delay 0)
-  (setq company-minimum-prefix-length 3))
+  (progn
+    ;; Use Company for completion
+    (bind-key [remap completion-at-point] #'company-complete company-mode-map)
+
+    (setq company-tooltip-align-annotations t
+          ;; Easy navigation to candidates with M-<n>
+          company-show-numbers t)
+    (setq company-dabbrev-downcase nil))
+  :diminish company-mode)
+
 
 (with-eval-after-load 'company
   (define-key company-active-map (kbd "M-n") nil)
@@ -189,6 +199,12 @@
   (define-key company-active-map (kbd "C-n") #'company-select-next)
   (define-key company-active-map (kbd "C-p") #'company-select-previous)
   (define-key company-active-map (kbd "SPC") #'company-abort))
+
+
+(use-package company-quickhelp          ; Documentation popups for Company
+  :ensure t
+  :defer t
+  :init (add-hook 'global-company-mode-hook #'company-quickhelp-mode))
 
 (use-package avy
   :ensure t
@@ -253,10 +269,6 @@
     (require 'flycheck-clang-analyzer)
      (flycheck-clang-analyzer-setup)))
 
-(with-eval-after-load 'company
-  (add-hook 'c++-mode-hook 'company-mode)
-  (add-hook 'c-mode-hook 'company-mode))
-
 (use-package company-c-headers
   :ensure t)
 
@@ -277,8 +289,6 @@
 (add-hook 'python-mode-hook 'yas-minor-mode)
 
 (add-hook 'python-mode-hook 'flycheck-mode)
-
-(add-hook 'python-mode-hook 'company-mode)
 
 (use-package company-jedi
   :ensure t
@@ -324,11 +334,35 @@
 (add-hook 'js2-mode-hook
           (lambda () (flycheck-select-checker "javascript-eslint")))
 
+(add-hook 'js2-mode-hook 'yas-minor-mode)
+
+(use-package company-go
+  :ensure t
+  :defer t
+  :init
+  (with-eval-after-load 'company
+    (add-to-list 'company-backends 'company-go)))
+
+
+(use-package go-mode
+  :ensure t
+  :init
+  (progn
+    (setq gofmt-command "goimports")
+    (add-hook 'before-save-hook 'gofmt-before-save)
+    (bind-key [remap find-tag] #'godef-jump))
+  :config
+  (add-hook 'go-mode-hook 'electric-pair-mode))
+
+(use-package go-eldoc
+  :ensure t
+  :defer
+  :init
+  (add-hook 'go-mode-hook 'go-eldoc-setup))
+
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
 
 (add-hook 'emacs-lisp-mode-hook 'yas-minor-mode)
-
-(add-hook 'emacs-lisp-mode-hook 'company-mode)
 
 (use-package slime
   :ensure t
