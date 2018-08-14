@@ -138,6 +138,10 @@
 (setq line-number-mode t)
 (setq column-number-mode t)
 
+(setq display-time-24hr-format t)
+(setq display-time-format "%Y-%m-%dT%H:%M:%SZ")
+(display-time-mode 1)
+
 ;; install spacemacs-theme
 (unless (package-installed-p 'spacemacs-theme)
   (package-refresh-contents)
@@ -154,7 +158,9 @@
     (setq spaceline-buffer-encoding-abbrev-p nil)
     (setq spaceline-line-column-p nil)
     (setq spaceline-line-p nil)
-    (setq powerline-default-separator (quote arrow))
+
+    (setq powerline-default-separator nil)
+    ;; (setq powerline-default-separator (quote arrow))
     (spaceline-spacemacs-theme))
 
 (use-package diminish

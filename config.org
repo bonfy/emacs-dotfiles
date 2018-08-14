@@ -6,7 +6,6 @@
   ;; hide startup frame message
   (setq inhibit-startup-message t)
 #+END_SRC
-
 ** UTF-8 Setting
 #+BEGIN_SRC emacs-lisp
 (setq locale-coding-system 'utf-8)
@@ -204,6 +203,12 @@ Show the current line and column for your cursor. We are not going to have relat
 (setq column-number-mode t)
 #+END_SRC
 
+** time-mode
+#+BEGIN_SRC emacs-lisp
+(setq display-time-24hr-format t)
+(setq display-time-format "%Y-%m-%dT%H:%M:%SZ")
+(display-time-mode 1)
+#+END_SRC
 * Theme and Mode-line
   
 Install these themes first
@@ -233,7 +238,9 @@ Choose Theme use `M-x customize-them
       (setq spaceline-buffer-encoding-abbrev-p nil)
       (setq spaceline-line-column-p nil)
       (setq spaceline-line-p nil)
-      (setq powerline-default-separator (quote arrow))
+      
+      (setq powerline-default-separator nil)
+      ;; (setq powerline-default-separator (quote arrow))
       (spaceline-spacemacs-theme))
 #+END_SRC
 
