@@ -232,6 +232,7 @@
 
 
 (with-eval-after-load 'company
+  ;; (define-key company-active-map (kbd "M-h") #'company-show-doc-buffer)
   (define-key company-active-map (kbd "M-n") nil)
   (define-key company-active-map (kbd "M-p") nil)
   (define-key company-active-map (kbd "C-n") #'company-select-next)
@@ -242,11 +243,15 @@
 (use-package company-quickhelp          ; Documentation popups for Company
   :ensure t
   :defer t
-  :init (add-hook 'global-company-mode-hook #'company-quickhelp-mode))
+  :init 
+  (add-hook 'global-company-mode-hook #'company-quickhelp-mode)
+  :config
+  (global-set-key (kbd "M-/") 'company-complete))
 
 (use-package company-quickhelp
    :ensure t
    :config
+   (setq pos-tip-background-color "#ff0000")
    (company-quickhelp-mode))
 
 (use-package avy
@@ -298,6 +303,13 @@
     (use-package yasnippet-snippets
       :ensure t)
     (yas-reload-all))
+
+(yas-global-mode 1)
+
+(use-package exec-path-from-shell
+  :ensure t
+  :config 
+  (exec-path-from-shell-initialize))
 
 (use-package flycheck
   :ensure t)
