@@ -194,6 +194,14 @@
   :config
     (global-hungry-delete-mode))
 
+(use-package magit
+  :ensure t
+  :config
+  (setq magit-push-always-verify nil)
+  (setq git-commit-summary-max-length 50)
+  :bind
+  ("M-g" . magit-status))
+
 (use-package ivy
   :ensure t)
 
