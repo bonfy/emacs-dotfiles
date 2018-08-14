@@ -224,7 +224,9 @@
 
     (setq company-tooltip-align-annotations t
           ;; Easy navigation to candidates with M-<n>
-          company-show-numbers t)
+          company-show-numbers t
+          company-idle-delay 0
+          company-minimum-prefix-length 2)
     (setq company-dabbrev-downcase nil))
   :diminish company-mode)
 
@@ -241,6 +243,11 @@
   :ensure t
   :defer t
   :init (add-hook 'global-company-mode-hook #'company-quickhelp-mode))
+
+(use-package company-quickhelp
+   :ensure t
+   :config
+   (company-quickhelp-mode))
 
 (use-package avy
   :ensure t
@@ -342,6 +349,13 @@
   :config
     (require 'company)
     (add-hook 'python-mode-hook 'python-mode-company-init))
+
+(use-package pipenv
+  :hook (python-mode . pipenv-mode)
+  :init
+  (setq
+   pipenv-projectile-after-switch-function
+   #'pipenv-projectile-after-switch-extended))
 
 (use-package js2-mode
   :ensure t

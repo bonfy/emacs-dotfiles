@@ -347,7 +347,9 @@ Your modeline is sacred, and if you have a lot of modes enabled, as you will if 
 
       (setq company-tooltip-align-annotations t
             ;; Easy navigation to candidates with M-<n>
-            company-show-numbers t)
+            company-show-numbers t
+            company-idle-delay 0
+            company-minimum-prefix-length 2)
       (setq company-dabbrev-downcase nil))
     :diminish company-mode)
 
@@ -366,6 +368,13 @@ Your modeline is sacred, and if you have a lot of modes enabled, as you will if 
     :init (add-hook 'global-company-mode-hook #'company-quickhelp-mode))
 #+END_SRC
 
+** company-quickhelp
+#+BEGIN_SRC emacs-lisp
+  (use-package company-quickhelp
+     :ensure t
+     :config
+     (company-quickhelp-mode))
+#+END_SRC
 ** avy
 `M-s` 输入首字母，然后 输入显示的 组合字母 快速定位
 #+BEGIN_SRC emacs-lisp
@@ -552,6 +561,15 @@ Requires libclang to be installed.
     :config
       (require 'company)
       (add-hook 'python-mode-hook 'python-mode-company-init))
+#+END_SRC
+*** pipenv
+#+BEGIN_SRC emacs-lisp
+(use-package pipenv
+  :hook (python-mode . pipenv-mode)
+  :init
+  (setq
+   pipenv-projectile-after-switch-function
+   #'pipenv-projectile-after-switch-extended))
 #+END_SRC
 ** javascript
 #+BEGIN_SRC emacs-lisp
