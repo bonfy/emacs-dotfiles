@@ -14,7 +14,14 @@
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 #+END_SRC
+** SET FONT
+#+BEGIN_SRC emacs-lisp
+  (set-face-attribute 'default nil :height 150 :family "InconsolataDZ for Powerline")
+  ;; (tooltip-mode -1)
 
+  ;; Spaces instead of tabs
+  ;; (setq-default indent-tabs-mode nil)
+#+END_SRC
 ** hide tool-bar menu-bar scroll-bar
 #+BEGIN_SRC emacs-lisp
 ;; hide tool-bar
@@ -87,6 +94,13 @@ Doing C-x k should kill the current buffer at all times, we have ibuffer for mor
     ([remap other-window] . switch-window))
 #+END_SRC
 
+** Neotree `s-m`
+#+BEGIN_SRC emacs-lisp
+  (use-package neotree
+  :ensure t
+  :bind (("s-m" . neotree-toggle))
+  :config (setq neo-autorefresh nil))
+#+END_SRC
 ** Following window splits
 After you split a window, your focus remains in the previous one. This annoyed me so much I wrote these two, they take care of it.
 #+BEGIN_SRC emacs-lisp

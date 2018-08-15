@@ -56,13 +56,15 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
- '(custom-enabled-themes (quote (spacemacs-dark)))
+ '(ansi-color-names-vector
+   ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
+ '(custom-enabled-themes (quote (dracula)))
  '(custom-safe-themes
    (quote
     ("aaffceb9b0f539b6ad6becb8e96a04f2140c8faa1de8039a343a4f1e009174fb" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
  '(package-selected-packages
    (quote
-    (magit exec-path-from-shell helm go-eldoc company-go company-quickhelp counsel-irony color-identifiers-mode js2-mode slime-company slime company-jedi flycheck-clang-analyzer flycheck yasnippet-snippets yasnippet company-irony company-c-headers expand-region mark-multiple ivy swiper popup-kill-ring linum-relative company dashboard rainbow-delimiters hungry-delete diminish spaceline switch-window rainbow-mode avy org-bullets dracula-theme beacon spacemacs-theme which-key use-package))))
+    (neotree magit exec-path-from-shell helm go-eldoc company-go company-quickhelp counsel-irony color-identifiers-mode js2-mode slime-company slime company-jedi flycheck-clang-analyzer flycheck yasnippet-snippets yasnippet company-irony company-c-headers expand-region mark-multiple ivy swiper popup-kill-ring linum-relative company dashboard rainbow-delimiters hungry-delete diminish spaceline switch-window rainbow-mode avy org-bullets dracula-theme beacon spacemacs-theme which-key use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

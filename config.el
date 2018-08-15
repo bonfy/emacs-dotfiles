@@ -7,6 +7,12 @@
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 
+(set-face-attribute 'default nil :height 150 :family "InconsolataDZ for Powerline")
+;; (tooltip-mode -1)
+
+;; Spaces instead of tabs
+;; (setq-default indent-tabs-mode nil)
+
 ;; hide tool-bar
 (tool-bar-mode -1)
 
@@ -52,6 +58,11 @@
         '("a" "s" "d" "f" "j" "k" "l" "i" "o"))
   :bind
     ([remap other-window] . switch-window))
+
+(use-package neotree
+:ensure t
+:bind (("s-m" . neotree-toggle))
+:config (setq neo-autorefresh nil))
 
 (defun split-and-follow-horizontally ()
   (interactive)
