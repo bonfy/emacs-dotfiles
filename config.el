@@ -322,6 +322,12 @@
 (add-to-list 'org-structure-template-alist
 	       '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
 
+(use-package projectile
+  :ensure t
+  :init
+    (projectile-mode 1))
+;; (global-set-key (kbd "s-p") 'projectile-compile-project)
+
 (use-package yasnippet
   :ensure t
   :config
@@ -370,29 +376,39 @@
 
 (add-hook 'python-mode-hook 'flycheck-mode)
 
-(use-package company-jedi
+(use-package python
   :ensure t
-  :config
-    (require 'company)
-    (add-to-list 'company-backends 'company-jedi))
+  :defer t
+  :mode ("\\.py\\'" . python-mode))
 
-(defun python-mode-company-init ()
-  (setq-local company-backends '((company-jedi
-                                  company-etags
-                                  company-dabbrev-code))))
-
-(use-package company-jedi
+(use-package elpy
   :ensure t
+  :init (with-eval-after-load 'python (elpy-enable))
   :config
-    (require 'company)
-    (add-hook 'python-mode-hook 'python-mode-company-init))
+  (setq elpy-rpc-python-command "python3"
+        python-shell-interpreter "ipython3"
+        python-shell-interpreter-args "-i")
+  (setq elpy-modules (delq 'elpy-module-company elpy-modules))
+  (add-hook 'python-mode-hook
+          (lambda ()
+            ;; explicitly load company for the occasion when the deferred
+            ;; loading with use-package hasn't kicked in yet
+            (company-mode)
+            (add-to-list 'company-backends
+                         (company-mode/backend-with-yas 'elpy-company-backend)))))
 
-(use-package pipenv
-  :hook (python-mode . pipenv-mode)
-  :init
-  (setq
-   pipenv-projectile-after-switch-function
-   #'pipenv-projectile-after-switch-extended))
+;; (use-package pipenv
+;;   :commands (pipenv-activate
+;;              pipenv-deactivate
+;;              pipenv-shell
+;;              pipenv-open
+;;              pipenv-install
+;;              pipenv-uninstall)
+;;   :hook (python-mode . pipenv-mode)
+;;   :init
+;;   (setq
+;;    pipenv-projectile-after-switch-function
+;;    #'pipenv-projectile-after-switch-extended))
 
 (use-package js2-mode
   :ensure t
