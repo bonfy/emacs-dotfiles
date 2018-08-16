@@ -600,28 +600,74 @@ Requires libclang to be installed.
 
 *** company
 #+BEGIN_SRC emacs-lisp
+  (setenv "PATH" (concat (expand-file-name "~/.local/bin:") (getenv "PATH")))
+
   (use-package python
     :ensure t
     :defer t
-    :mode ("\\.py\\'" . python-mode))
+    :mode 
+    ("\\.wsgi$" . python-mode)
+    ("\\.py\\'" . python-mode)
+    :interpreter ("python" . python-mode)
+    :init 
+    (setq-default indent-tabs-mode nil)
+    ;; :bind (:map python-mode-map
+    ;;             (("M-/" . completion-at-point)))
+    :config 
+    (setq python-indent-offset 4))
+
+  (defun company-yasnippet-or-completion ()
+    "Solve company yasnippet conflicts."
+    (interactive)
+    (let ((yas-fallback-behavior
+           (apply 'company-complete-common nil)))
+      (yas-expand)))
+
+  (add-hook 'company-mode-hook
+            (lambda ()
+              (substitute-key-definition
+               'company-complete-common
+               'company-yasnippet-or-completion
+               company-active-map)))
 
   (use-package elpy
-    :ensure t
-    :init (with-eval-after-load 'python (elpy-enable))
+    :ensure t 
+    :init
+    (with-eval-after-load 'python (elpy-enable))
     :config
     (setq elpy-rpc-python-command "python3"
           python-shell-interpreter "ipython3"
-          python-shell-interpreter-args "-i")
-    (setq elpy-modules (delq 'elpy-module-company elpy-modules))
-    (add-hook 'python-mode-hook
-            (lambda ()
-              ;; explicitly load company for the occasion when the deferred
-              ;; loading with use-package hasn't kicked in yet
-              (company-mode)
-              (add-to-list 'company-backends
-                           (company-mode/backend-with-yas 'elpy-company-backend)))))
+          python-shell-interpreter-args "-i"
+          elpy-rpc-backend "jedi")
+    (add-hook 'python-mode-hook 'company-mode))
+
+  ;; (eval-after-load 'python
+  ;;   '(define-key python-mode-map ["M-/"] 'completion-at-point))
+
+
+  ;; (use-package jedi
+  ;; :ensure t
+  ;; :init
+  ;; (add-to-list 'company-backends 'company-jedi)
+  ;; :config
+  ;; (use-package company-jedi
+  ;;   :ensure t
+  ;;   :init
+  ;;   (add-hook 'python-mode-hook (lambda () (add-to-list 'company-backends 'company-jedi)))
+  ;;   (setq company-jedi-python-bin "python3")))
+
+
+    ;; (setq elpy-modules (delq 'elpy-module-company elpy-modules))
+    ;; (add-hook 'python-mode-hook
+    ;;         (lambda ()
+    ;;           ;; explicitly load company for the occasion when the deferred
+    ;;           ;; loading with use-package hasn't kicked in yet
+    ;;           (company-mode)
+    ;;           (add-to-list 'company-backends
+    ;;                        (company-mode/backend-with-yas 'elpy-company-backend)))))
 
 #+END_SRC
+
 *** pipenv
 #+BEGIN_SRC emacs-lisp
   ;; (use-package pipenv
