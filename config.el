@@ -138,6 +138,11 @@
 
 (global-subword-mode 1)
 
+(setq recentf-max-saved-items 200
+      recentf-max-menu-items 15)
+(recentf-mode 1)
+(global-set-key "\C-x\ \C-r" 'recentf-open-files)
+
 (setq electric-pair-pairs '(
 			   (?\{ . ?\})
 			   (?\( . ?\))
@@ -507,6 +512,69 @@
   :defer
   :init
   (add-hook 'go-mode-hook 'go-eldoc-setup))
+
+(use-package flymd
+  :ensure t
+  :init
+  (progn
+    (defun sm-flymd-browser-function (url)
+      (let ((process-environment (browse-url-process-environment)))
+        (apply 'start-process (concat "chrome " url)
+               nil
+               "/usr/bin/open"
+               (list "-a" "firefox" url)))))
+               ;; (list "-a" "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome" url)))))
+
+  :config
+  (setq flymd-browser-open-function 'sm-flymd-browser-function)
+  :bind ("C-c C-m" . flymd-flyit)
+)
+
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+
+;; DOC: http://julienblanchard.com/2016/fancy-rust-development-with-emacs/
+(use-package cargo
+  :ensure t)
+
+(use-package racer
+  :ensure t)
+
+;; (setq racer-cmd "~/.cargo/bin/racer")
+;; (setq racer-rust-src-path "～/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src")
+
+(use-package rust-mode
+  :ensure t
+  :mode
+  ("\\.rs\\'" . rust-mode)
+  :config
+  (setq rust-format-on-save t))
+
+;; (add-hook 'rust-mode-hook 'cargo-minor-mode)
+;; (add-hook 'rust-mode-hook #'racer-mode)
+
+;; (add-hook 'racer-mode-hook #'eldoc-mode)
+;; (add-hook 'racer-mode-hook #'company-mode)
+;; (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+
+(add-hook 'rust-mode-hook
+          '(lambda ()
+             (setq tab-width 2)
+             (setq racer-cmd (concat (getenv "HOME") "/.cargo/bin/racer")) ;; Rustup binaries PATH
+             (setq racer-rust-src-path (concat (getenv "HOME") "/..rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"))
+             (setq company-tooltip-align-annotations t)
+         (add-hook 'rust-mode-hook #'racer-mode)
+             (add-hook 'racer-mode-hook #'eldoc-mode)
+             (add-hook 'racer-mode-hook #'company-mode)
+             (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+         (add-hook 'rust-mode-hook 'cargo-minor-mode)
+             (local-set-key (kbd "TAB") #'company-indent-or-complete-common)
+             (local-set-key (kbd "C-c <tab>") #'rust-format-buffer)))
 
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
 
